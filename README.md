@@ -1,4 +1,4 @@
-# Featured-Bench-Artifacts# Artifact for Program Feature-based Benchmarking for FuzzTesting
+# Artifacts for Program Feature-based Benchmarking for FuzzTesting
 
 This repository contains the FeatureBench, experimental data, and visualizations (heatmaps) for the paper titled **"Program Feature-based Benchmarking for FuzzTesting"**.
 
