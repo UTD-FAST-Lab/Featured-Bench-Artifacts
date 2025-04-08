@@ -1,0 +1,7 @@
+all: MAGIC_S0_L1_D5
+
+MAGIC_S0_L1_D5: MAGIC_S0_L1_D5.c
+	$(CC) $(CFLAGS) MAGIC_S0_L1_D5.c -o MAGIC_S0_L1_D5
+
+clean:
+	rm MAGIC_S0_L1_D5

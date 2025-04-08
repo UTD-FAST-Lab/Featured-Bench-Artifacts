@@ -1,0 +1,7 @@
+all: LOOPD_I200
+
+LOOPD_I200: LOOPD_I200.c
+	$(CC) $(CFLAGS) LOOPD_I200.c -o LOOPD_I200
+
+clean:
+	rm LOOPD_I200

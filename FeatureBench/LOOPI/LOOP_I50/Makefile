@@ -1,0 +1,7 @@
+all: LOOP_I50
+
+LOOP_I50: LOOP_I50.c
+	$(CC) $(CFLAGS) LOOP_I50.c -o LOOP_I50
+
+clean:
+	rm LOOP_I50

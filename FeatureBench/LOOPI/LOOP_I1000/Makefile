@@ -1,0 +1,7 @@
+all: LOOP_I1000
+
+LOOP_I1000: LOOP_I1000.c
+	$(CC) $(CFLAGS) LOOP_I1000.c -o LOOP_I1000
+
+clean:
+	rm LOOP_I1000
