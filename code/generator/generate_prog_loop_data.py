@@ -25,7 +25,7 @@ def generate_c_program(settings):
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('config/config_loop_data.ini')
+    config.read('config/config_loopdi.ini')
     
     settings_list = []
     

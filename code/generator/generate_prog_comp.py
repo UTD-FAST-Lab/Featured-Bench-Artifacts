@@ -1,4 +1,3 @@
-import math
 import os
 import configparser
 
@@ -52,7 +51,9 @@ def generate_c_program(settings):
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('config/config_comp.ini')
+    config.read('config/config_comd.ini')
+    # # Unblock the following line to generate programs for COMW
+    # config.read('config/config_comw.ini')
     
     settings_list = []
     

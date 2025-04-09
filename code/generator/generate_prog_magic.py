@@ -94,7 +94,11 @@ def generate_c_program(settings):
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('config/config_magic.ini')
+    config.read('config/config_magicd.ini')
+    # # Unblock the following line to generate programs for MAGICL
+    # config.read('config/config_magicl.ini')
+    # # Unblock the following line to generate programs for MAGICS
+    # config.read('config/config_magics.ini')
     
     settings_list = []
     
@@ -110,7 +114,9 @@ if __name__ == '__main__':
     
     for settings in settings_list:
         generated_code = generate_c_program(settings)
-        with open(f'program/MAGIC_D{len(settings[2])}_L{settings[1]}_{settings[0].upper()}.c', 'w+') as f:
+        condition = settings[2]
+        print(f'condition: {condition[0].get("start")}')
+        with open(f'program/MAGIC_S{condition[0].get("start")}_L{len(condition[0].get("value"))}_D{len(settings[2])}.c', 'w+') as f:
             f.write(generated_code)
-            print(f'Genrated program MAGIC_D{len(settings[2])}_L{settings[1]}_{settings[0].upper()}.c...')
+            print(f'Genrated program MAGIC_S{condition[0].get("start")}_L{len(condition[0].get("value"))}_D{len(settings[2])}.c...')
         

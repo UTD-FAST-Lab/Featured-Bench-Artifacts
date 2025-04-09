@@ -35,7 +35,9 @@ def generate_c_program(settings):
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('config/config_hard.ini')
+    config.read('config/config_checksumd.ini')
+    # # Unblock the following line to generate programs for CHECKSUMC
+    # config.read('config/config_checksumc.ini')
     
     settings_list = []
     
@@ -51,7 +53,7 @@ if __name__ == '__main__':
     
     for settings in settings_list:
         generated_code = generate_c_program(settings)
-        with open(f'program/HARD_L{settings[0]}_C{settings[1]}_D{len(settings[2])}.c', 'w+') as f:
+        with open(f'program/CHECKSUM_C{settings[1]}_D{len(settings[2])}.c', 'w+') as f:
             f.write(generated_code)
-            print(f'Genrated program HARD_L{settings[0]}_C{settings[1]}_D{len(settings[2])}.c...')
+            print(f'Genrated program CHECKSUM_C{settings[1]}_D{len(settings[2])}.c...')
         

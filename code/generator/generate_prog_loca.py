@@ -52,7 +52,7 @@ def generate_c_program(settings):
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('config/config_loca.ini')
+    config.read('config/config_comb.ini')
     
     settings_list = []
     
@@ -69,6 +69,6 @@ if __name__ == '__main__':
     for settings in settings_list:
         branch_count = 0
         generated_code = generate_c_program(settings)
-        with open(f'program/LOCA_W{settings[0]}_D{settings[1]}_B{settings[2]}.c', 'w+') as f:
+        with open(f'program/COMP_W{settings[0]}_D{settings[1]}_B{settings[2]}.c', 'w+') as f:
             f.write(generated_code)
-            print(f'Generated program LOCA_W{settings[0]}_D{settings[1]}_B{settings[2]}.c...')
+            print(f'Generated program COMP_W{settings[0]}_D{settings[1]}_B{settings[2]}.c...')

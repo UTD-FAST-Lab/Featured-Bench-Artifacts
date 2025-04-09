@@ -14,7 +14,7 @@ def generate_template(iteration):
             int *p = NULL;
             *p = 10;
         }}
-        RECUR_I{CRASH}(data, size, i + 1);
+        RECURD_I{CRASH}(data, size, i + 1);
     }}""".format(CRASH=iteration)
     
     return template
@@ -28,7 +28,7 @@ def generate_c_program(settings):
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('config/config_recur_data.ini')
+    config.read('config/config_recurdi.ini')
     
     settings_list = []
     

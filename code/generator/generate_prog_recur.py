@@ -28,7 +28,7 @@ def generate_c_program(settings):
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('config/config_recur.ini')
+    config.read('config/config_recuri.ini')
     
     settings_list = []
     

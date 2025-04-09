@@ -1,7 +1,5 @@
-import math
 import os
 import configparser
-
 
 def generate_full(i, base, index, interval, bbranch):
     global branch_count
@@ -36,7 +34,7 @@ def generate_c_program(settings):
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('config/config_prob.ini')
+    config.read('config/config_comwe.ini')
     
     settings_list = []
     
@@ -53,6 +51,6 @@ if __name__ == '__main__':
     for settings in settings_list:
         branch_count = 0
         generated_code = generate_c_program(settings)
-        with open(f'program/PROB_W{settings[0]}_D{settings[1]}_B{settings[2]}.c', 'w+') as f:
+        with open(f'program/COMP_W2_D{settings[1]}_ω{settings[0]}_B{settings[2]}.c', 'w+') as f:
             f.write(generated_code)
-            print(f'Genrated program PROB_W{settings[0]}_D{settings[1]}_B{settings[2]}.c...')
+            print(f'Genrated program COMP_W2_D{settings[1]}_ω{settings[0]}_B{settings[2]}.c...')

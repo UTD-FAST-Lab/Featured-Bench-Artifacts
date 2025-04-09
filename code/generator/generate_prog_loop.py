@@ -23,7 +23,7 @@ def generate_c_program(settings):
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('config/config_loop.ini')
+    config.read('config/config_loopi.ini')
     
     settings_list = []
     
