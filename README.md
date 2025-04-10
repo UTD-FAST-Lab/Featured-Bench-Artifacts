@@ -75,6 +75,22 @@ Inside the `data` directory, there are two sub-directories (`results` and `heatm
 
 The `code` directory contains two sub-directories (`generator` and `experiments`), which contain the source code of the benchmark generation scripts used in Section 4 and the experiment scripts used in Section 5, respectively. 
 
+The `generator` directory contains 3 sub-directories: `config`, `template_char`, and `template_num`, and 11 python scripts:
+  - **config**: Contains 13 configuration files for the benchmark generation scripts. Each configuration file corresponds to a group of benchmark programs.
+  - **template_char**: Contains one template C file and a Makefile for generating the benchmark programs for the `LOOPI`, `LOOPDI`, `RECURI`, `RECURDI`, `MAGICS`, `MAGICL`, `MAGICD`, `CHECKSUMC`, and `CHECKSUMD` groups.
+  - **template_num**: Contains three template C files or header files, and a Makefile for generating the benchmark programs for the `COMW`, `COMD`, `COMWE`, and `COMB` groups.
+  - **generate_benchmark_char.py**: Generates the benchmark programs based on the configuration files and the `template_char` template.
+  - **generate_benchmark_num.py**: Generates the benchmark programs based on the configuration files and the `template_num` template.
+  - **generate_prog_comp.py**: Generates the C source code for each benchmark program under the `COMW` and `COMD` groups.
+  - **generate_prog_comb.py**: Generates the C source code for each benchmark program under the `COMB` group.
+  - **generate_prog_comwe.py**: Generates the C source code for each benchmark program under the `COMWE` group.
+  - **generate_prog_loop.py**: Generates the C source code for each benchmark program under the `LOOPI` group.
+  - **generate_prog_loop_data.py**: Generates the C source code for each benchmark program under the `LOOPDI` group.
+  - **generate_prog_recur.py**: Generates the C source code for each benchmark program under the `RECURI` group.
+  - **generate_prog_recur_data.py**: Generates the C source code for each benchmark program under the `RECURDI` group.
+  - **generate_prog_magic.py**: Generates the C source code for each benchmark program under the `MAGICS`, `MAGICL`, and `MAGICD` groups.
+  - **generate_prog_checksum.py**: Generates the C source code for each benchmark program under the `CHECKSUMC` and `CHECKSUMD` groups.
+
 ### Requirements
 
 The evaluation of this artifact does not require specific hardware. However, the following software and hardware specifications are recommended:
@@ -87,6 +103,27 @@ The evaluation of this artifact does not require specific hardware. However, the
 We provide smaller experiments to verify the functionality of the artifact in this section, as replicating the major paper results is expected to take hundreds of hours of machine time.
 
 #### Generating the Benchmark Programs
+
+First, ensure that you are in the `code/generator` directory:
+
+`cd code/generator`
+
+Then, run the following command to generate the benchmark programs for the `COMD` group as an example:
+
+```bash
+python3 generate_prog_comp.py comd --out COMD_PROG
+```
+
+This will create a `COMD_PROG` folder containing 8 generated C source code files for the `COMD` benchmark group.
+
+Next, run the following command to generate the benchmark programs for the `COMD` group:
+
+```bash
+python3 generate_benchmark_num.py COMD_PROG --out COMD
+```
+
+This will create a `COMD` folder containing 8 generated benchmark programs for the `COMD` group.
+
 
 #### Fuzzing the Benchmark Programs
 

@@ -1,5 +1,6 @@
 import os
 import configparser
+import argparse
 
 
 def generate_full(i, width, depth, interval, bbranch):
@@ -50,10 +51,18 @@ def generate_c_program(settings):
     return code
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Generate C program")
+    parser.add_argument("group", help="Group name")
+    parser.add_argument("--out", help="Output location")
+
+    args = parser.parse_args()
+    
     config = configparser.ConfigParser()
-    config.read('config/config_comd.ini')
-    # # Unblock the following line to generate programs for COMW
-    # config.read('config/config_comw.ini')
+    
+    if args.group == 'comd':
+        config.read('config/config_comd.ini')
+    elif args.group == 'comw':
+        config.read('config/config_comw.ini')
     
     settings_list = []
     
@@ -64,12 +73,12 @@ if __name__ == '__main__':
 
         settings_list.append((width, depth, bbranch))
     
-    if not os.path.exists('program'):
-        os.makedirs('program')
+    if not os.path.exists(args.out):
+        os.makedirs(args.out)
     
     for settings in settings_list:
         branch_count = 0
         generated_code = generate_c_program(settings)
-        with open(f'program/COMP_W{settings[0]}_D{settings[1]}_B{settings[2]}.c', 'w+') as f:
+        with open(f'{args.out}/COMP_W{settings[0]}_D{settings[1]}_B{settings[2]}.c', 'w+') as f:
             f.write(generated_code)
             print(f'Generated program COMP_W{settings[0]}_D{settings[1]}_B{settings[2]}.c...')
