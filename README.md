@@ -65,15 +65,12 @@ Each benchmark program directory contains the **source code** (C files) and a **
 
 The `data` directory contains the experimental data, and visualizations (heatmaps) that support the conclusions made in the two research questions (RQ1 and RQ2).
 Inside the `data` directory, there are two sub-directories (`results` and `heatmaps`):
-
-### Results
-The `results` directory contains 12 CSV files with experimental results for 11 fuzzers: AFL, AFLFast, AFL++, Honggfuzz, EcoFuzz, MOpt, Fairfuzz, TortoiseFuzz, Memlock, RedQueen, and Laf-intel. 
-Each CSV file corresponds to a group of benchmark programs. The results for `CHECKSUMC` and `CHECKSUMD` are saved in a single CSV file.
+  - **results**: Contains 12 CSV files with experimental results for 11 fuzzers: AFL, AFLFast, AFL++, Honggfuzz, EcoFuzz, MOpt, Fairfuzz, TortoiseFuzz, Memlock, RedQueen, and Laf-intel. 
+  Each CSV file corresponds to a group of benchmark programs. The results for `CHECKSUMC` and `CHECKSUMD` are saved in a single CSV file.
   
-These results are used to generate the correlation results and visualizations for Research Question 2 (RQ2).
+  These results are used to generate the correlation results and visualizations for Research Question 2 (RQ2).
 
-### Heatmaps
-The `heatmaps` directory contains 13 heatmaps, each displaying the **Mann-Whitney U test (p-value)** for program pairwise runtime comparisons in the `COMB` benchmark group for each fuzzer. Note that TortoiseFuzz and Memlock have two variants, so each has two heatmaps.
+  - **heatmaps**: Contains 13 heatmaps, each displaying the **Mann-Whitney U test (p-value)** for program pairwise runtime comparisons in the `COMB` benchmark group for each fuzzer. Note that TortoiseFuzz and Memlock have two variants, so each has two heatmaps.
 
 ## Setup
 
@@ -89,3 +86,4 @@ The evaluation of this artifact does not require specific hardware. However, the
 - Python (tested with version 3.10.12)
 
 ### Instructions
+
