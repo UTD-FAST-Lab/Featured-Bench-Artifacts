@@ -28,7 +28,7 @@ echo 1 | sudo tee /proc/sys/kernel/sched_child_runs_first
 echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
 
 # Step2: Compile target programs
-cd Featured-Bench
+cd testbench
 for dir in */; do
     if [ -f "$dir/Makefile" ]; then
         dir="${dir%/}"

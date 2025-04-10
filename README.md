@@ -91,6 +91,21 @@ The `generator` directory contains 3 sub-directories: `config`, `template_char`,
   - **generate_prog_magic.py**: Generates the C source code for each benchmark program under the `MAGICS`, `MAGICL`, and `MAGICD` groups.
   - **generate_prog_checksum.py**: Generates the C source code for each benchmark program under the `CHECKSUMC` and `CHECKSUMD` groups.
 
+The `experiments` directory contains 13 sub-directories, 12 of which correspond to a fuzzer or its variants. 
+In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
+
+_Note: AFL and AFLFast share one directory. AFL uses the exploit power schedule, AFLFast uses the fast power schedule. Memlock has two variants: Heap and Stack. TorotiseFuzz has two variants: bb and loop._
+
+The additional sub-directory, `testfuzz`, is provided for testing purpose for the _Getting Started_ evaluation, which reuses the `AFL++` docker image. There a small benchmark, `testbench`, inside the `testfuzz` directory, which contains 1 benchmark program `COMP_W2_D4_B1` and a `seed` directory with 1 seed input file.
+
+Inside each fuzzer directory, there is a `coverage` sub-directory, a `build.sh` script, a `Dockerfile`, and a `report.py` script:
+  - **coverage**: Contains a `coverage.sh` script that collects the coverage information.
+  - **build.sh**: Compiles the benchmark programs, build the docker image, runs the fuzzer inside the docker container, and generates the final report.
+  - **Dockerfile**: Contains the instructions to build the docker image for each fuzzer.
+  - **report.py**: Extracts the coverage information from the fuzzer output and generates final reports.
+
+_Note: For ecofuzz, there is an additional script `static_module.sh` to aid in its fuzzing process._
+
 ### Requirements
 
 The evaluation of this artifact does not require specific hardware. However, the following software and hardware specifications are recommended:
@@ -124,13 +139,16 @@ python3 generate_benchmark_num.py COMD_PROG --out COMD
 
 This will create a `COMD` folder containing 8 generated benchmark programs for the `COMD` group.
 
-
 #### Fuzzing the Benchmark Programs
 
-We have provided small versions of the Droidbench and CATS Microbenchmark under the names `icse25-ezbench` and 
-`icse25-ezcats`, respectively. These benchmarks each contain one program that exhibited nondeterministic behaviors:
+First, ensure that you are in the `code/experiments` directory:
 
-- `icse25-ezbench` contains *JavaThread2.apk*.
-- `icse25-ezcats` contains *TC1.jar*.
+`cd code/experiments`
+
+To run the experiments using the `testfuzz`, run the following command:
+
+```bash
+cd testfuzz && bash build.sh fast COMD 30
+```
 
 ### Detailed Description
