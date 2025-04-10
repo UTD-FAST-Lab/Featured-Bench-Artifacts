@@ -17,7 +17,7 @@ if [ -z "$3" ]; then
 fi
 
 # Build AFL++ Docker image
-docker build -t aflplusplus .
+docker build -t testfuzz .
 
 # Step1: System configuration
 echo "" | sudo tee /proc/sys/kernel/core_pattern
@@ -28,8 +28,6 @@ echo 1 | sudo tee /proc/sys/kernel/sched_child_runs_first
 echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
 
 # Step2: Compile target programs
-mkdir Featured-Bench
-cp -r ../../../FeatureBench/$2/* Featured-Bench
 cd Featured-Bench
 for dir in */; do
     if [ -f "$dir/Makefile" ]; then
@@ -37,7 +35,7 @@ for dir in */; do
         echo "Compiling binary in $dir"
         docker run --rm -w /work -it -v "$(pwd)":/work --privileged \
             -e dir=$dir \
-            -e CFLAGS='-fcoverage-mapping -fprofile-instr-generate -gline-tables-only' aflplusplus \
+            -e CFLAGS='-fcoverage-mapping -fprofile-instr-generate -gline-tables-only' testfuzz \
             sh -c 'cd "$dir" && timeout 1h make'
     fi
 done
@@ -65,11 +63,11 @@ for dir in */; do
                 -e power=$1 \
                 -e feature=$2 \
                 -e timeout=$3 \
-                aflplusplus \
+                testfuzz \
                 sh -c 'chmod +x /scripts/coverage.sh && \
-                       mkdir -p "/results/${feature}/aflplusplus_${power}/${timestamp}/${dir}/${index}" && \
+                       mkdir -p "/results/${feature}/testfuzz_${power}/${timestamp}/${dir}/${index}" && \
                        log_file="runtime_log.txt" && \
-                       results_dir="/results/${feature}/aflplusplus_${power}/${timestamp}/${dir}/${index}" && \
+                       results_dir="/results/${feature}/testfuzz_${power}/${timestamp}/${dir}/${index}" && \
                        command="afl-fuzz -p ${power} -i ./seeds -o $results_dir -- ./${dir}/${dir} @@" && \
                        echo "===================" >> ${results_dir}/${log_file} && \
                        echo "Command: $command" >> ${results_dir}/${log_file} && \
@@ -88,7 +86,7 @@ for dir in */; do
                        echo "Extract coverage for ${dir}_${index}" >> ${results_dir}/${log_file} && \
                        cd ${dir} && bash /scripts/coverage.sh ${results_dir} ${dir} >> ${results_dir}/${log_file} && \
                        echo "+++++++++++++++++++" >> ${results_dir}/${log_file}'
-            log_path="../../results/${2}/aflplusplus_${1}/${timestamp}/${dir}/${i}/runtime_log.txt"
+            log_path="../../results/${2}/testfuzz_${1}/${timestamp}/${dir}/${i}/runtime_log.txt"
             if [[ -f "$log_path" ]] && grep -q "Duration (seconds):" "$log_path"; then
                 duration=$(grep -oP 'Duration \(seconds\): \K[0-9]+' "$log_path")
                 if [[ "$duration" -ge 7200 ]]; then
@@ -110,5 +108,5 @@ for dir in */; do
 done
 
 # Step4: Generate metrics & coverage report
-cd .. && sudo chmod -R 777 ../results/$2/aflplusplus_$1/$timestamp
-python3 report.py ../results/$2/aflplusplus_$1/$timestamp
+cd .. && sudo chmod -R 777 ../results/$2/testfuzz_$1/$timestamp
+python3 report.py ../results/$2/testfuzz_$1/$timestamp
