@@ -1,6 +1,7 @@
 import os
 import configparser
 import json
+import argparse
 
 
 def generate_template(length, conditions):
@@ -34,10 +35,18 @@ def generate_c_program(settings):
     return code
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Generate C program")
+    parser.add_argument("group", help="Group name")
+    parser.add_argument("--out", help="Output location")
+
+    args = parser.parse_args()
+    
     config = configparser.ConfigParser()
-    config.read('config/config_checksumd.ini')
-    # # Unblock the following line to generate programs for CHECKSUMC
-    # config.read('config/config_checksumc.ini')
+    
+    if args.group == 'checksumd':
+        config.read('config/config_checksumd.ini')
+    elif args.group == 'checksumc':
+        config.read('config/config_checksumc.ini')
     
     settings_list = []
     
@@ -48,12 +57,12 @@ if __name__ == '__main__':
         
         settings_list.append((length, count, json.loads(conditions)))
     
-    if not os.path.exists('program'):
-        os.makedirs('program')
+    if not os.path.exists(args.out):
+        os.makedirs(args.out)
     
     for settings in settings_list:
         generated_code = generate_c_program(settings)
-        with open(f'program/CHECKSUM_C{settings[1]}_D{len(settings[2])}.c', 'w+') as f:
+        with open(f'{args.out}/CHECKSUM_C{settings[1]}_D{len(settings[2])}.c', 'w+') as f:
             f.write(generated_code)
             print(f'Genrated program CHECKSUM_C{settings[1]}_D{len(settings[2])}.c...')
         

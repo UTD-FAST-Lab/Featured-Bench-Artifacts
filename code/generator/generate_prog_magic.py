@@ -1,6 +1,7 @@
 import os
 import configparser
 import json
+import argparse
 
 
 def generate_str_template(length, conditions):
@@ -93,12 +94,20 @@ def generate_c_program(settings):
     return code
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Generate C program")
+    parser.add_argument("group", help="Group name")
+    parser.add_argument("--out", help="Output location")
+
+    args = parser.parse_args()
+    
     config = configparser.ConfigParser()
-    config.read('config/config_magicd.ini')
-    # # Unblock the following line to generate programs for MAGICL
-    # config.read('config/config_magicl.ini')
-    # # Unblock the following line to generate programs for MAGICS
-    # config.read('config/config_magics.ini')
+    
+    if args.group == 'magicd':
+        config.read('config/config_magicd.ini')
+    elif args.group == 'magicl':
+        config.read('config/config_magicl.ini')
+    elif args.group == 'magics':
+        config.read('config/config_magics.ini')
     
     settings_list = []
     
@@ -109,14 +118,14 @@ if __name__ == '__main__':
         
         settings_list.append((ttype, length, json.loads(conditions)))
     
-    if not os.path.exists('program'):
-        os.makedirs('program')
+    if not os.path.exists(args.out):
+        os.makedirs(args.out)
     
     for settings in settings_list:
         generated_code = generate_c_program(settings)
         condition = settings[2]
         print(f'condition: {condition[0].get("start")}')
-        with open(f'program/MAGIC_S{condition[0].get("start")}_L{len(condition[0].get("value"))}_D{len(settings[2])}.c', 'w+') as f:
+        with open(f'{args.out}/MAGIC_S{condition[0].get("start")}_L{len(condition[0].get("value"))}_D{len(settings[2])}.c', 'w+') as f:
             f.write(generated_code)
             print(f'Genrated program MAGIC_S{condition[0].get("start")}_L{len(condition[0].get("value"))}_D{len(settings[2])}.c...')
         

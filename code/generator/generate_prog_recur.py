@@ -1,5 +1,6 @@
 import os
 import configparser
+import argparse
 
 
 def generate_template(iteration):
@@ -27,6 +28,11 @@ def generate_c_program(settings):
     return code
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Generate C program")
+    parser.add_argument("--out", help="Output location")
+
+    args = parser.parse_args()
+    
     config = configparser.ConfigParser()
     config.read('config/config_recuri.ini')
     
@@ -37,12 +43,12 @@ if __name__ == '__main__':
         
         settings_list.append((iteration, 'i'))
     
-    if not os.path.exists('program'):
-        os.makedirs('program')
+    if not os.path.exists(args.out):
+        os.makedirs(args.out)
     
     for settings in settings_list:
         generated_code = generate_c_program(settings)
-        with open(f'program/RECUR_I{settings[0]}.c', 'w+') as f:
+        with open(f'{args.out}/RECUR_I{settings[0]}.c', 'w+') as f:
             f.write(generated_code)
             print(f'Generated program RECUR_I{settings[0]}.c...')
         

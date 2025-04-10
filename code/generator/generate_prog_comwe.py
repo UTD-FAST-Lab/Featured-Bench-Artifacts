@@ -1,5 +1,6 @@
 import os
 import configparser
+import argparse
 
 def generate_full(i, base, index, interval, bbranch):
     global branch_count
@@ -33,6 +34,11 @@ def generate_c_program(settings):
     return code
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Generate C program")
+    parser.add_argument("--out", help="Output location")
+
+    args = parser.parse_args()
+    
     config = configparser.ConfigParser()
     config.read('config/config_comwe.ini')
     
@@ -45,12 +51,12 @@ if __name__ == '__main__':
 
         settings_list.append((base, index, bbranch))
     
-    if not os.path.exists('program'):
-        os.makedirs('program')
+    if not os.path.exists(args.out):
+        os.makedirs(args.out)
     
     for settings in settings_list:
         branch_count = 0
         generated_code = generate_c_program(settings)
-        with open(f'program/COMP_W2_D{settings[1]}_ω{settings[0]}_B{settings[2]}.c', 'w+') as f:
+        with open(f'{args.out}/COMP_W2_D{settings[1]}_ω{settings[0]}_B{settings[2]}.c', 'w+') as f:
             f.write(generated_code)
             print(f'Genrated program COMP_W2_D{settings[1]}_ω{settings[0]}_B{settings[2]}.c...')

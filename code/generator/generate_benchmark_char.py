@@ -1,13 +1,14 @@
 import os
+import argparse
 
-def replace_program_in_c_file(program):
+def replace_program_in_c_file(program, input, output):
     FUNC_path = 'template_char/FUNC.c'
     if os.path.exists(FUNC_path):
         with open(FUNC_path, 'r') as FUNC_file:
             FUNC_content = FUNC_file.read()
     FUNC_path = 'template_char/FUNC.c'
     if os.path.exists(FUNC_path):
-        with open(f'program/{program}', 'r') as program_file:
+        with open(f'{input}/{program}', 'r') as program_file:
             program_content = program_file.read()
 
     func_name = os.path.splitext(program)[0]
@@ -20,7 +21,7 @@ def replace_program_in_c_file(program):
     updated_FUNC_content = updated_FUNC_content.replace('// INSERT PROGRAM HERE', program_content)
     updated_FUNC_content = updated_FUNC_content.replace('FUNC', func_name)
     
-    output_dir = os.path.join('benchmark', func_name)
+    output_dir = os.path.join(output, func_name)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -39,7 +40,12 @@ def replace_program_in_c_file(program):
             
     
 if __name__ == '__main__':   
-    for filename in os.listdir('program'):
+    parser = argparse.ArgumentParser(description="Generate C benchmark")
+    parser.add_argument("input", help="Input location")
+    parser.add_argument("--out", help="Output location")
+    args = parser.parse_args()
+    
+    for filename in os.listdir(args.input):
         if filename.endswith('.c'):
-            replace_program_in_c_file(filename)
+            replace_program_in_c_file(filename, args.input, args.out)
             print(f'Genrated benchmark {filename}...')
