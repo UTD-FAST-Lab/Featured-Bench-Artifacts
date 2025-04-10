@@ -1,6 +1,43 @@
-# Artifacts for Program Feature-based Benchmarking for FuzzTesting
+# The Artifacts for Program Feature-based Benchmarking for FuzzTesting
 
-This repository contains the FeatureBench, experimental data, and visualizations (heatmaps) for the paper titled **"Program Feature-based Benchmarking for FuzzTesting"**.
+## Table of Contents
+
+- [The Artifacts for Program Feature-based Benchmarking for FuzzTesting](#the-artifacts-for-program-feature-based-benchmarking-for-fuzztesting)
+  - [Table of Contents](#table-of-contents)
+  - [Purpose](#purpose)
+  - [Provenance](#provenance)
+  - [Data](#data)
+    - [RQ1](#rq1)
+    - [RQ2](#rq2)
+  - [Setup](#setup)
+    - [Requirements](#requirements)
+    - [Instructions](#instructions)
+  - [Usage](#usage)
+    - [Basic Usage Example](#basic-usage-example)
+      - [Detecting Nondeterminism Using Strategy I](#detecting-nondeterminism-using-strategy-i)
+      - [How to Read Output](#how-to-read-output)
+      - [Detecting Nondeterminism Using Strategy II](#detecting-nondeterminism-using-strategy-ii)
+      - [Post-processing Results](#post-processing-results)
+    - [Replicating Major Paper Results](#replicating-major-paper-results)
+
+## Purpose
+
+
+This artifact contains the FeatureBench, code and data for the paper titled ***"Program Feature-based Benchmarking for FuzzTesting"***.
+
+The `code` directory contains the source code of the benchmark generation scripts used in Section 4 and the experiment scripts used in Section 5. 
+
+The `data` directory contains the experimental data, and visualizations (heatmaps) that support the conclusions made in the two research 
+questions (RQ1 and RQ2). 
+
+We are applying for the **Available**, **Functional**, and **Reusable** badges.
+
+We believe we deserve the **Available** badge because our artifact is available on Zenodo at https://doi.org/xxxxxxxx (DOI xxxxxx/zenodo.xxxxx) for long-term archiving.
+
+We believe we deserve the **Functional** and **Reusable** badges because our artifact can be executed
+used to detect nondeterministic behaviors in static analysis tools. 
+Our README.md file gives guidance on how to setup and run the experiments in our paper. 
+This artifact also utilizes Docker to facilitate reuse, as recommended in the ICSE 2025 Call for Artifact Submissions.
 
 ## Repository Structure
 
