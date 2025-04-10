@@ -73,8 +73,7 @@ Inside the `data` directory, there are two sub-directories (`results` and `heatm
 
 ## Setup
 
-The `code` directory contains the source code of the benchmark generation scripts used in Section 4 and the experiment scripts used in Section 5. 
-Inside the `code` directory, there are two sub-directories (`generator` and `experiments`):
+The `code` directory contains two sub-directories (`generator` and `experiments`), which contain the source code of the benchmark generation scripts used in Section 4 and the experiment scripts used in Section 5, respectively. 
 
 ### Requirements
 
@@ -84,5 +83,17 @@ The evaluation of this artifact does not require specific hardware. However, the
 - Docker (tested with version 25.0.2);
 - Python (tested with version 3.10.12)
 
-### Instructions
+### Getting Started
+We provide smaller experiments to verify the functionality of the artifact in this section, as replicating the major paper results is expected to take hundreds of hours of machine time.
 
+#### Generating the Benchmark Programs
+
+#### Fuzzing the Benchmark Programs
+
+We have provided small versions of the Droidbench and CATS Microbenchmark under the names `icse25-ezbench` and 
+`icse25-ezcats`, respectively. These benchmarks each contain one program that exhibited nondeterministic behaviors:
+
+- `icse25-ezbench` contains *JavaThread2.apk*.
+- `icse25-ezcats` contains *TC1.jar*.
+
+### Detailed Description
