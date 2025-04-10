@@ -1,6 +1,12 @@
 # Check feature
 if [ -z "$1" ]; then
-  echo "Please choose a feature from (comp, prob, location, magic, loop, memo, hard)."
+  echo "Please choose a feature from (COMD, COMW, COMB, COMWE, LOOPI, LOOPDI, RECURI, RECURDI, MAGICD, MAGICL, MAGICS, CHECKSUMC, CHECKSUMD)."
+  exit 1
+fi
+
+# Check timeout
+if [ -z "$2" ]; then
+  echo "Please set a timeout for fuzzing (unit: second)."
   exit 1
 fi
 
@@ -16,9 +22,9 @@ echo 1 | sudo tee /proc/sys/kernel/sched_child_runs_first
 echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
 
 # Step2: Compile target programs
-git clone https://github.com/UTD-FAST-Lab/Featured-Bench.git
+mkdir Featured-Bench
+cp -r ../../../FeatureBench/$1/* Featured-Bench
 cd Featured-Bench
-git checkout v2.0-$1
 for dir in */; do
     if [ -f "$dir/Makefile" ]; then
         dir="${dir%/}"
@@ -55,8 +61,8 @@ for dir in */; do
             docker run --rm --privileged -it \
             -w "/work" \
             -v "$(pwd)":/work \
-            -v "/data/miao/featured_bench/results/":/results \
-            -v "/home/miao/Featured-Bench-Experiments/fairfuzz/coverage":/scripts \
+            -v "$(pwd)/../../results/":/results \
+            -v "$(pwd)/../coverage":/scripts \
             -e dir=$dir \
             -e timestamp=$timestamp \
             -e AFL_USE_ASAN=1 \
@@ -64,6 +70,7 @@ for dir in */; do
             -e AFL_BENCH_UNTIL_CRASH=1 \
             -e index=$i \
             -e feature=$1 \
+            -e timeout=$2 \
             fairfuzz \
             sh -c 'mkdir -p "/results/${feature}/fairfuzz/${timestamp}/${dir}/${index}" && \
                    log_file="runtime_log.txt" && \
@@ -74,7 +81,7 @@ for dir in */; do
                    start_time=$(date +"%Y-%m-%d %H:%M:%S") && \
                    echo "Started at: ${start_time}" >> ${results_dir}/${log_file} && \
 
-                   { timeout 2h $command; } 2>> ${results_dir}/${log_file} && \
+                   { timeout ${timeout}s $command; } 2>> ${results_dir}/${log_file} && \
                    
                    end_time=$(date +"%Y-%m-%d %H:%M:%S") && \
                    echo "Ended at: ${end_time}" >> ${results_dir}/${log_file} && \
@@ -105,4 +112,5 @@ for dir in */; do
 done
 
 # Step4: Generate metrics & coverage report
-cd .. && python3 report.py ../results/$1/fairfuzz/$timestamp
+cd .. && sudo chmod -R 777 ../results/$1/fairfuzz/$timestamp
+python3 report.py ../results/$1/fairfuzz/$timestamp
