@@ -81,3 +81,11 @@ The `code` directory contains the source code of the benchmark generation script
 Inside the `code` directory, there are two sub-directories (`generator` and `experiments`):
 
 ### Requirements
+
+The evaluation of this artifact does not require specific hardware. However, the following software and hardware specifications are recommended:
+
+- Linux (tested with Ubuntu 22.04.3 LTS);
+- Docker (tested with version 25.0.2);
+- Python (tested with version 3.10.12)
+
+### Instructions
