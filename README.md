@@ -67,7 +67,6 @@ The `data` directory contains the experimental data, and visualizations (heatmap
 Inside the `data` directory, there are two sub-directories (`results` and `heatmaps`):
   - **results**: Contains 12 CSV files with experimental results for 11 fuzzers: AFL, AFLFast, AFL++, Honggfuzz, EcoFuzz, MOpt, Fairfuzz, TortoiseFuzz, Memlock, RedQueen, and Laf-intel. 
   Each CSV file corresponds to a group of benchmark programs. The results for `CHECKSUMC` and `CHECKSUMD` are saved in a single CSV file.
-  
   These results are used to generate the correlation results and visualizations for Research Question 2 (RQ2).
 
   - **heatmaps**: Contains 13 heatmaps, each displaying the **Mann-Whitney U test (p-value)** for program pairwise runtime comparisons in the `COMB` benchmark group for each fuzzer. Note that TortoiseFuzz and Memlock have two variants, so each has two heatmaps.
