@@ -81,15 +81,9 @@ The `generator` directory contains 3 sub-directories: `config`, `template_char`,
   - **template_num**: Contains three template C files or header files, and a Makefile for generating the benchmark programs for the `COMW`, `COMD`, `COMWE`, and `COMB` groups.
   - **generate_benchmark_char.py**: Generates the benchmark programs based on the configuration files and the `template_char` template.
   - **generate_benchmark_num.py**: Generates the benchmark programs based on the configuration files and the `template_num` template.
-  - **generate_prog_comp.py**: Generates the C source code for each benchmark program under the `COMW` and `COMD` groups.
-  - **generate_prog_comb.py**: Generates the C source code for each benchmark program under the `COMB` group.
-  - **generate_prog_comwe.py**: Generates the C source code for each benchmark program under the `COMWE` group.
-  - **generate_prog_loop.py**: Generates the C source code for each benchmark program under the `LOOPI` group.
-  - **generate_prog_loop_data.py**: Generates the C source code for each benchmark program under the `LOOPDI` group.
-  - **generate_prog_recur.py**: Generates the C source code for each benchmark program under the `RECURI` group.
-  - **generate_prog_recur_data.py**: Generates the C source code for each benchmark program under the `RECURDI` group.
-  - **generate_prog_magic.py**: Generates the C source code for each benchmark program under the `MAGICS`, `MAGICL`, and `MAGICD` groups.
-  - **generate_prog_checksum.py**: Generates the C source code for each benchmark program under the `CHECKSUMC` and `CHECKSUMD` groups.
+  - **generate_prog_xxx.py**: Generates the C source code for each benchmark program under the respective groups. 
+
+  _Note: `generate_prog_comp.py` generates programs for the `COMW` and `COMD` groups, `generate_prog_magic.py` generates programs for the `MAGICS`, `MAGICL`, and `MAGICD` groups, and `generate_prog_checksum.py` generates programs for the `CHECKSUMC` and `CHECKSUMD` groups._
 
 The `experiments` directory contains 13 sub-directories, 12 of which correspond to a fuzzer or its variants. 
 In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
