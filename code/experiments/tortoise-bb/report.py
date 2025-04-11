@@ -138,46 +138,6 @@ def extract_metrics_for_all(base_dir):
                 })
     return results
 
-def extract_coverage_for_all(base_dir):
-    results = []
-
-    for root, dirs, _ in os.walk(base_dir):
-        for dir_name in dirs:
-            folder_path = os.path.join(root, dir_name)
-            lcovdir_path = os.path.join(folder_path, 'lcov')
-                
-            if os.path.exists(lcovdir_path):
-                for lcov in glob.glob(os.path.join(lcovdir_path, "*.json")):
-                    region_rate = None
-                    region_cov = None
-                    region_tol = None
-                    line_rate = None
-                    line_cov = None
-                    line_tol = None
-                    function_rate = None
-                    function_cov = None
-                    function_tol = None
-                    region_rate, region_cov, region_tol, line_rate, line_cov, line_tol, function_rate, function_cov, function_tol = extract_coverage(lcov)
-                    results.append({
-                            'fuzzer': lcov.split('/')[3],
-                            'program': lcov.split('/')[5],
-                            'iteration': lcov.split('/')[6],
-                            'seed': lcov.split('/')[8].replace('.json', ''),
-                            'region_rate': -1 if region_rate is None else region_rate,
-                            'region_cov': -1 if region_cov is None else region_cov,
-                            'region_tol': -1 if region_tol is None else region_tol,
-                            'line_rate': -1 if line_rate is None else line_rate,
-                            'line_cov': -1 if line_cov is None else line_cov,
-                            'line_tol': -1 if line_tol is None else line_tol,
-                            'branch_rate': -1,
-                            'branch_cov': -1,
-                            'branch_tol': -1,
-                            'function_rate': -1 if function_rate is None else function_rate,
-                            'function_cov': -1 if function_cov is None else function_cov,
-                            'function_tol': -1 if function_tol is None else function_tol
-                    })
-    return results
-
 def generate_metrics_csv(base_dir):
     results = extract_metrics_for_all(base_dir)
     
@@ -197,24 +157,6 @@ def generate_metrics_csv(base_dir):
         writer.writerow(headers)
         writer.writerows(values)
         
-def generate_coverage_csv(base_dir):
-    results = extract_coverage_for_all(base_dir)
-        
-    headers = results[0].keys()
-    values = [result.values() for result in results]
-    
-    feature = base_dir.split('/')[2]
-    fuzzer = base_dir.split('/')[3]
-    timestamp = base_dir.split('/')[4]
-
-    csv_dir_path = f'../reports/csvs/{feature.upper()}/{timestamp[:8]}/coverage'
-    os.makedirs(csv_dir_path, exist_ok=True)
-    csv_path = f'{csv_dir_path}/{fuzzer}.csv'
-    print(f'coverage report is generated at {csv_path}...')
-    with open(csv_path, 'w', encoding='UTF8') as f:
-        writer = csv.writer(f)
-        writer.writerow(headers)
-        writer.writerows(values)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -223,4 +165,3 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     generate_metrics_csv(args.results)
-    generate_coverage_csv(args.results)

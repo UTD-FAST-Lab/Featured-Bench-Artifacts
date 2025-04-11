@@ -144,5 +144,64 @@ To run the experiments using the `testfuzz`, run the following command:
 ```bash
 cd testfuzz && bash build.sh fast COMD 30
 ```
+##### How to Read Output
+
+where `fast` is the power schedule, `COMD` is the benchmark group, and `30` can be configured to the timeout (unit: second) you wish to use. 
+This will create a `results` folder and a `reports` in the `code/experiments` directory.
+
+We explain the structure of the results through the `testfuzz` example above:
+
+```commandline
+
+reports
+|- csvs
+|  |- COMD
+|  |  |- 20250410
+|  |  |  |- coverage
+|  |  |  |  |- testfuzz_fast.csv
+results
+|- COMD
+|  |- testfuzz_fast
+|  |  |- 202504101716
+|  |  |  |- COMP_W2_D4_B1
+|  |  |  |  |- 0
+|  |  |  |  |  |- default
+|  |  |  |  |  |  |- crashes
+|  |  |  |  |  |  |  |- id:000000,sig:06,src:000000,time:179,execs:165,op:arith8,pos:0,val:-7
+|  |  |  |  |  |  |- hangs
+|  |  |  |  |  |  |  |- ...
+|  |  |  |  |  |  |- lcov
+|  |  |  |  |  |  |  |- coverage.json
+|  |  |  |  |  |  |- profraw
+|  |  |  |  |  |  |  |- id:000000,time:0,execs:0,orig:seed.profraw
+|  |  |  |  |  |  |  |- id:000001,src:000000,time:3,execs:9,op:quick,pos:0,+cov.profraw
+|  |  |  |  |  |  |  |- ...
+|  |  |  |  |  |  |- queue
+|  |  |  |  |  |  |  |- id:000000,time:0,execs:0,orig:seed
+|  |  |  |  |  |  |  |- id:000001,src:000000,time:3,execs:9,op:quick,pos:0,+cov
+|  |  |  |  |  |  |  |- ...
+|  |  |  |  |  |  |- ...
+|  |  |  |  |  |  |- fuzz_bitmap
+|  |  |  |  |  |  |- fuzzer_setup
+|  |  |  |  |  |  |- fuzzer_stats
+|  |  |  |  |  |  |- ...
+|  |  |  |  |  |- runtime_log.txt
+|  |  |  |  |- ...
+|  |  |  |  |- 19
+|  |  |  |  |  |- ...
+```
+
+By default, the fuzzer will run each benchmark program for 20 iterations. The results of each iteration are stored in their respective folders. Since each 
+
+For each configuration-program pair, three files are generated, each with a different extension: `.raw`, `.raw.log`, and `.raw.time`. These files correspond to the results produced by the tool, which will be processed by the *ToolReader* implementation, the log for each experiment, and the execution time for each experiment, respectively.
+
+Configurations in the results are represented as hash values. You can see what configuration a hash value represents by looking in the configuration folder. In this example, configuration 1e9c00f5704518e138859b037784c841 corresponds to the configuration ``
+
+The results of non-determinism detection can be found in the `non_determinism` folder *(if any nondeterminism is detected)*. 
+
+This folder maintains all non-deterministic results across 5 iterations, each batch of results is stored under a folder named as `configration-hash_apk-name.apk.raw`.
+
+In our example, one detected non-determinism is on `JavaThread2.apk` under configuration  `7b5480bdb06b2ff39ebfb2bcedd2f657`.
+
 
 ### Detailed Description
