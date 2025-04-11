@@ -83,11 +83,8 @@ The `code` directory contains two sub-directories (`generator` and `experiments`
     _Note: `generate_prog_comp.py` generates programs for the `COMW` and `COMD` groups, `generate_prog_magic.py` generates programs for the `MAGICS`, `MAGICL`, and `MAGICD` groups, and `generate_prog_checksum.py` generates programs for the `CHECKSUMC` and `CHECKSUMD` groups._
 
   - **experiments**: Contains 13 sub-directories, 12 of which correspond to a fuzzer or its variants. In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
-
   _Note: AFL and AFLFast share one directory. AFL uses the exploit power schedule, AFLFast uses the fast power schedule. Memlock has two variants: Heap and Stack. TorotiseFuzz has two variants: bb and loop._
-
   The additional sub-directory, `testfuzz`, is provided for testing purpose for the _Getting Started_ evaluation, which reuses the `AFL++` docker image. There a small benchmark, `testbench`, inside the `testfuzz` directory, which contains 1 benchmark program `COMP_W2_D4_B1` and a `seed` directory with 1 seed input file.
-
   Inside each fuzzer directory, there is a `coverage` sub-directory, a `build.sh` script, a `Dockerfile`, and a `report.py` script:
     - **coverage**: Contains a `coverage.sh` script that collects the coverage information.
     - **build.sh**: Compiles the benchmark programs, build the docker image, runs the fuzzer inside the docker container, and generates the final report.
