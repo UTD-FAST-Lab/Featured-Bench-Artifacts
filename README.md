@@ -328,4 +328,4 @@ bash fuzz_all_CHECKSUMD.sh
 
 ```
 After all the experiments are completed, the results will be saved in the `results` and `reports` directories as 
-described in the _Fuzz the Benchmark Programs_ section.
+described in the [_Fuzz the Benchmark Programs_](#fuzz-the-benchmark-programs) section.
