@@ -1,5 +1,4 @@
 # Evaluate all fuzzers on COMW group. 
-# Expected to take 10 hours.
 (cd $(pwd)/afl && bash build.sh exploit COMW 7200) &
 pid1=$!
 

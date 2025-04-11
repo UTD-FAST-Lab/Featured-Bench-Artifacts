@@ -282,69 +282,50 @@ To evaluate all fuzzers on all program groups in FeatureBench, navigate to the `
 ```commandline
 cd code/experiments
 ```
-and run the following 13 commands to evaluate all fuzzers on COMD group.
-Alternatively, you can execute the shell script `fuzz_all_COMD.sh`.
+and run the following 13 commands to evaluate all fuzzers on all groups in FeatureBench.
+Alternatively, you can execute the shell script `fuzz_all.sh`.
 
 ```commandline
 
 # Evaluate all fuzzers on COMD group. 
-# Expected to take 10 hours.
-(cd $(pwd)/afl && bash build.sh exploit COMD 7200) &
-pid1=$!
+bash fuzz_all_COMW.sh
 
-(cd $(pwd)/aflfast && bash build.sh fast COMD 7200) &
-pid2=$!
+# Evaluate all fuzzers on COMW group.
+bash fuzz_all_COMW.sh
 
-(cd $(pwd)/aflplusplus && bash build.sh explore COMD 7200) &
-pid3=$!
+# Evaluate all fuzzers on COMB group.
+bash fuzz_all_COMB.sh
 
-(cd $(pwd)/honggfuzz && bash build.sh COMD 7200) &
-pid4=$!
+# Evaluate all fuzzers on COMWE group.
+bash fuzz_all_COMWE.sh
 
-(cd $(pwd)/ecofuzz && bash build.sh COMD 7200) &
-pid5=$!
+# Evaluate all fuzzers on LOOPI group.
+bash fuzz_all_LOOPI.sh
 
-(cd $(pwd)/mopt && bash build.sh COMD 7200) &
-pid6=$!
+# Evaluate all fuzzers on LOOPDI group.
+bash fuzz_all_LOOPDI.sh
 
-(cd $(pwd)/fairfuzz && bash build.sh COMD 7200) &
-pid7=$!
+# Evaluate all fuzzers on RECURI group.
+bash fuzz_all_RECURI.sh
 
-(cd $(pwd)/tortoise-bb && bash build.sh COMD 7200) &
-pid8=$!
+# Evaluate all fuzzers on RECURDI group.
+bash fuzz_all_RECURDI.sh
 
-(cd $(pwd)/tortoise-loop && bash build.sh COMD 7200) &
-pid9=$!
+# Evaluate all fuzzers on MAGICS group.
+bash fuzz_all_MAGICS.sh
 
-(cd $(pwd)/memlock-heap && bash build.sh COMD 7200) &
-pid10=$!
+# Evaluate all fuzzers on MAGICL group.
+bash fuzz_all_MAGICL.sh
 
-(cd $(pwd)/memlock-stack && bash build.sh COMD 7200) &
-pid11=$!
+# Evaluate all fuzzers on MAGICD group.
+bash fuzz_all_MAGICD.sh
 
-(cd $(pwd)/redqueen && bash build.sh COMD 7200) &
-pid12=$!
+# Evaluate all fuzzers on CHECKSUMC group.
+bash fuzz_all_CHECKSUMC.sh
 
-(cd $(pwd)/lafintel && bash build.sh COMD 7200) &
-pid13=$!
-
-# Wait for all processes to complete
-wait $pid1
-wait $pid2
-wait $pid3
-wait $pid4
-wait $pid5
-wait $pid6
-wait $pid7
-wait $pid8
-wait $pid9
-wait $pid10
-wait $pid11
-wait $pid12
-wait $pid13
-
-# clean all "Featured-Bench" directories
-sudo find . -type d -name "Featured-Bench" -exec rm -rf {}
+# Evaluate all fuzzers on CHECKSUMD group.
+bash fuzz_all_CHECKSUMD.sh
 
 ```
-After the above commands are completed, run the shell script `fuzz_all_COMW.sh` to evaluate all fuzzers on COMW group.
+After all the experiments are completed, the results will be saved in the `results` and `reports` directories as 
+described in the _Fuzz the Benchmark Programs_ section.
