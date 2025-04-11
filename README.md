@@ -20,7 +20,7 @@
         - [Generator](#generator)
         - [Experiments](#experiments)
     - [Replicating the major results](#replicating-the-major-results)
-    
+
 
 ## Purpose
 
@@ -208,7 +208,11 @@ _Note: For ecofuzz, there is an additional script `static_module.sh` to aid in i
 
 ### Replicating the major results
 
-Replicating the major results from the paper is expected to require thousands of hours of machine time and significant system memory. Please ensure that sufficient computing resources are available before running these commands. For reference, the experiments in our paper were conducted on two servers:  
+Replicating the major results from the paper is expected to require hundreds of hours of machine time and significant system memory. Please ensure that sufficient computing resources are available before running these commands. For reference, the experiments in our paper were conducted on a server with an AMD Ryzen Threadripper PRO 5975WX CPU (64 threads) and 128GB RAM.
 
-- *Server 1*: 384GB of RAM, 2 Intel Xeon Gold 5218 16-core CPUs @ 2.30GHz.  
-- *Server 2*: 144GB of RAM, 2 Intel Xeon Silver 4116 12-core CPUs @ 2.10GHz.  
+The following 24 commands will run experiments for all tool/benchmark combinations. 
+Alternatively, you can execute the shell script `run_all_s1.sh`. 
+
+```commandline
+
+```
