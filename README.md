@@ -329,3 +329,7 @@ bash fuzz_all_CHECKSUMD.sh
 ```
 After all the experiments are completed, the results will be saved in the `results` and `reports` directories as 
 described in the [_Fuzz the Benchmark Programs_](#fuzz-the-benchmark-programs) section.
+
+Additionally, we provide a Jupyter notebook, `code/experiments/analyze.ipynb`. This notebook requires the csv reports in `data/results` as input. It generates figures 7 and 8 for Research Question 2 (RQ2).  
+
+And that's it! Thank you so much for your service as an artifact evaluator!
