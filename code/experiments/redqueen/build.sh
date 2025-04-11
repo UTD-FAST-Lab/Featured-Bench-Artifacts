@@ -29,7 +29,7 @@ for dir in */; do
     if [ -f "$dir/Makefile" ]; then
         dir="${dir%/}"
         echo "Compiling binary in $dir"
-        docker run --rm -w /work -it -v "$(pwd)":/work --privileged \
+        docker run --rm -w /work -i -v "$(pwd)":/work --privileged \
             -e dir=$dir \
             -e CFLAGS='-fcoverage-mapping -fprofile-instr-generate -gline-tables-only' redqueen \
             sh -c 'cd "$dir" && timeout 1h make; \
@@ -41,7 +41,7 @@ for dir in */; do
     if [ -f "$dir/Makefile" ]; then
         dir="${dir%/}"
         echo "Compiling binary in $dir"
-        docker run --rm -w /work -it -v "$(pwd)":/work --privileged \
+        docker run --rm -w /work -i -v "$(pwd)":/work --privileged \
             -e dir=$dir \
             -e AFL_LLVM_CMPLOG=1 redqueen \
             sh -c 'cd "$dir" && timeout 1h make; \
@@ -57,7 +57,7 @@ for dir in */; do
         echo "Fuzzing binary in $dir"
         for i in {0..19}; do
             echo "Number: $i"
-            docker run --rm --privileged -it \
+            docker run --rm --privileged -i \
                 -w "/work" \
                 -v "$(pwd)":/work \
                 -v "$(pwd)/../../results/":/results \

@@ -29,7 +29,7 @@ for dir in */; do
     if [ -f "$dir/Makefile" ]; then
         dir="${dir%/}"
         echo "Compiling binary in $dir"
-        docker run --rm --privileged -it -w /work -v "$(pwd)":/work -e dir=$dir mopt \
+        docker run --rm --privileged -i -w /work -v "$(pwd)":/work -e dir=$dir mopt \
             sh -c 'cd "$dir" && timeout 1h make; \
                    mv ${dir%/} "${dir%/}_bin";'
     fi
@@ -39,7 +39,7 @@ for dir in */; do
     if [ -f "$dir/Makefile" ]; then
         dir="${dir%/}"
         echo "Compiling binary cov in $dir"
-        docker run --rm --privileged -it -w /work -v "$(pwd)":/work \
+        docker run --rm --privileged -i -w /work -v "$(pwd)":/work \
             -e CFLAGS='-fcoverage-mapping -fprofile-instr-generate -gline-tables-only' \
             -e dir=$dir \
             -e CC=afl-clang \
@@ -58,7 +58,7 @@ for dir in */; do
 
         for i in {0..19}; do
             echo "Number: $i"
-            docker run --rm --privileged -it \
+            docker run --rm --privileged -i \
             -w "/work" \
             -v "$(pwd)":/work \
             -v "$(pwd)/../../results/":/results \

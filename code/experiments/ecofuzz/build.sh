@@ -29,7 +29,7 @@ for dir in */; do
     if [ -f "$dir/Makefile" ]; then
         dir="${dir%/}"
         echo "Compiling binary in $dir"
-        docker run --rm --privileged -it -w /work -v "$(pwd)":/work -e dir=$dir ecofuzz \
+        docker run --rm --privileged -i -w /work -v "$(pwd)":/work -e dir=$dir ecofuzz \
             sh -c 'cd "$dir" && timeout 1h make; \
                    mv ${dir%/} "${dir%/}_bin";'
     fi
@@ -39,7 +39,7 @@ done
 for dir in */; do
     if [ -f "$dir/Makefile" ]; then
         dir="${dir%/}"
-        docker run --rm --privileged -it -w /work -v "$(pwd)":/work -e dir=$dir ecofuzz \
+        docker run --rm --privileged -i -w /work -v "$(pwd)":/work -e dir=$dir ecofuzz \
             sh -c '/EcoFuzz/static_module.sh "./$dir/${dir}_bin" "./$dir/${dir}_dict";'
     fi
 done
@@ -49,7 +49,7 @@ for dir in */; do
     if [ -f "$dir/Makefile" ]; then
         dir="${dir%/}"
         echo "Compiling binary cov in $dir"
-        docker run --rm --privileged -it -w /work -v "$(pwd)":/work -e dir=$dir \
+        docker run --rm --privileged -i -w /work -v "$(pwd)":/work -e dir=$dir \
             -e CFLAGS='-fcoverage-mapping -fprofile-instr-generate -gline-tables-only' \
             -e CC=/EcoFuzz/afl-clang \
             -e CXX=/EcoFuzz/afl-clang++ ecofuzz \
@@ -69,7 +69,7 @@ for dir in */; do
 
         for i in {0..19}; do
             echo "Number: $i"
-            docker run --rm --privileged -it \
+            docker run --rm --privileged -i \
             -w "/work" \
             -v "$(pwd)":/work \
             -v "$(pwd)/../../results/":/results \
