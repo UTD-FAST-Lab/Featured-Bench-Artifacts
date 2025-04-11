@@ -72,30 +72,29 @@ Inside the `data` directory, there are two sub-directories (`results` and `heatm
 
 The `code` directory contains two sub-directories (`generator` and `experiments`), which contain the source code of the benchmark generation scripts used in Section 4 and the experiment scripts used in Section 5, respectively. 
 
-The `generator` directory contains 3 sub-directories: `config`, `template_char`, and `template_num`, and 11 python scripts:
-  - **config**: Contains 13 configuration files for the benchmark generation scripts. Each configuration file corresponds to a group of benchmark programs.
-  - **template_char**: Contains one template C file and a Makefile for generating the benchmark programs for the `LOOPI`, `LOOPDI`, `RECURI`, `RECURDI`, `MAGICS`, `MAGICL`, `MAGICD`, `CHECKSUMC`, and `CHECKSUMD` groups.
-  - **template_num**: Contains three template C files or header files, and a Makefile for generating the benchmark programs for the `COMW`, `COMD`, `COMWE`, and `COMB` groups.
-  - **generate_benchmark_char.py**: Generates the benchmark programs based on the configuration files and the `template_char` template.
-  - **generate_benchmark_num.py**: Generates the benchmark programs based on the configuration files and the `template_num` template.
-  - **generate_prog_xxx.py**: Generates the C source code for each benchmark program under the respective groups. 
+  - **generator**: Contains 3 sub-directories: `config`, `template_char`, and `template_num`, and 11 python scripts:
+    - **config**: Contains 13 configuration files for the benchmark generation scripts. Each configuration file corresponds to a group of benchmark programs.
+    - **template_char**: Contains one template C file and a Makefile for generating the benchmark programs for the `LOOPI`, `LOOPDI`, `RECURI`, `RECURDI`, `MAGICS`, `MAGICL`, `MAGICD`, `CHECKSUMC`, and `CHECKSUMD` groups.
+    - **template_num**: Contains three template C files or header files, and a Makefile for generating the benchmark programs for the `COMW`, `COMD`, `COMWE`, and `COMB` groups.
+    - **generate_benchmark_char.py**: Generates the benchmark programs based on the configuration files and the `template_char` template.
+    - **generate_benchmark_num.py**: Generates the benchmark programs based on the configuration files and the `template_num` template.
+    - **generate_prog_xxx.py**: Generates the C source code for each benchmark program under the respective groups. 
 
-  _Note: `generate_prog_comp.py` generates programs for the `COMW` and `COMD` groups, `generate_prog_magic.py` generates programs for the `MAGICS`, `MAGICL`, and `MAGICD` groups, and `generate_prog_checksum.py` generates programs for the `CHECKSUMC` and `CHECKSUMD` groups._
+    _Note: `generate_prog_comp.py` generates programs for the `COMW` and `COMD` groups, `generate_prog_magic.py` generates programs for the `MAGICS`, `MAGICL`, and `MAGICD` groups, and `generate_prog_checksum.py` generates programs for the `CHECKSUMC` and `CHECKSUMD` groups._
 
-The `experiments` directory contains 13 sub-directories, 12 of which correspond to a fuzzer or its variants. 
-In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
+  - **experiments**: Contains 13 sub-directories, 12 of which correspond to a fuzzer or its variants. In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
 
-_Note: AFL and AFLFast share one directory. AFL uses the exploit power schedule, AFLFast uses the fast power schedule. Memlock has two variants: Heap and Stack. TorotiseFuzz has two variants: bb and loop._
+  _Note: AFL and AFLFast share one directory. AFL uses the exploit power schedule, AFLFast uses the fast power schedule. Memlock has two variants: Heap and Stack. TorotiseFuzz has two variants: bb and loop._
 
-The additional sub-directory, `testfuzz`, is provided for testing purpose for the _Getting Started_ evaluation, which reuses the `AFL++` docker image. There a small benchmark, `testbench`, inside the `testfuzz` directory, which contains 1 benchmark program `COMP_W2_D4_B1` and a `seed` directory with 1 seed input file.
+  The additional sub-directory, `testfuzz`, is provided for testing purpose for the _Getting Started_ evaluation, which reuses the `AFL++` docker image. There a small benchmark, `testbench`, inside the `testfuzz` directory, which contains 1 benchmark program `COMP_W2_D4_B1` and a `seed` directory with 1 seed input file.
 
-Inside each fuzzer directory, there is a `coverage` sub-directory, a `build.sh` script, a `Dockerfile`, and a `report.py` script:
-  - **coverage**: Contains a `coverage.sh` script that collects the coverage information.
-  - **build.sh**: Compiles the benchmark programs, build the docker image, runs the fuzzer inside the docker container, and generates the final report.
-  - **Dockerfile**: Contains the instructions to build the docker image for each fuzzer.
-  - **report.py**: Extracts the coverage information from the fuzzer output and generates final reports.
+  Inside each fuzzer directory, there is a `coverage` sub-directory, a `build.sh` script, a `Dockerfile`, and a `report.py` script:
+    - **coverage**: Contains a `coverage.sh` script that collects the coverage information.
+    - **build.sh**: Compiles the benchmark programs, build the docker image, runs the fuzzer inside the docker container, and generates the final report.
+    - **Dockerfile**: Contains the instructions to build the docker image for each fuzzer.
+    - **report.py**: Extracts the coverage information from the fuzzer output and generates final reports.
 
-_Note: For ecofuzz, there is an additional script `static_module.sh` to aid in its fuzzing process._
+  _Note: For ecofuzz, there is an additional script `static_module.sh` to aid in its fuzzing process._
 
 ### Requirements
 
