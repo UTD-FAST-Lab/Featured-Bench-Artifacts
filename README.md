@@ -50,7 +50,7 @@ A pre-print of the original paper titled ***"Program Feature-based Benchmarking 
 
 ### Getting Started
 We provide smaller experiments to verify the functionality of the artifact in this section, 
-To replicate the major paper results, please refer to the [_Replicate the major results_](#replicate-the-major-results) section. The complete evaluation is expected to take hundreds of hours of machine time. 
+To replicate the major paper results, please refer to the [_Replicate the major results_](#replicate-the-major-results) section. The complete experiments are expected to take hundreds of hours of machine time.
 
 #### Requirements
 
