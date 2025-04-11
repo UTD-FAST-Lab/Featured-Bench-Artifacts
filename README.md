@@ -19,7 +19,9 @@
       - [Code](#code)
         - [Generator](#generator)
         - [Experiments](#experiments)
-    - [Replicating the major results](#replicating-the-major-results)
+    - [Replicate the major results](#replicate-the-major-results)
+      - [Generate the Complete Benchmark Programs](#generate-the-complete-benchmark-programs)
+      - [Evaluate All Fuzzers on FeatureBench](#evaluate-all-fuzzers-on-featurebench)
 
 
 ## Purpose
