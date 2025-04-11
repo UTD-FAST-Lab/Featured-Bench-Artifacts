@@ -194,7 +194,7 @@ The `generator` directory contains 3 sub-directories: `config`, `template_char`,
 
 ##### Experiments
 
-The `generator` directory contains 14 sub-directories, 13 of which correspond to a fuzzer or its variants. In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
+The `experiments` directory contains 14 sub-directories, 13 of which correspond to a fuzzer or its variants. In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
 
 _Note: Memlock has two variants: Heap and Stack. TorotiseFuzz has two variants: bb and loop._
 
