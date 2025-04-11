@@ -6,19 +6,21 @@
   - [Table of Contents](#table-of-contents)
   - [Purpose](#purpose)
   - [Provenance](#provenance)
-  - [FeatureBench](#featurebench)
-  - [Data](#data)
-    - [Results](#results)
-    - [Heatmaps](#heatmaps)
-  - [Code](#code)
-    - [Generator](#generator)
-    - [Experiments](#experiments)
-  - [Setup](#setup)
+  - [Getting Started](#getting-started)
     - [Requirements](#requirements)
-    - [Getting Started](#getting-started)
-      - [Generating the Benchmark Programs](#generating-the-benchmark-programs)
-      - [Fuzzing the Benchmark Programs](#fuzzing-the-benchmark-programs)
-    - [Detailed Description](#detailed-description)
+    - [Generating the Benchmark Programs](#generating-the-benchmark-programs)
+    - [Fuzzing the Benchmark Programs](#fuzzing-the-benchmark-programs)
+  - [Detailed Description](#detailed-description)
+    - [Structure of the Artifact](#structure-of-the-artifact)
+      - [FeatureBench](#featurebench)
+      - [Data](#data)
+        - [Results](#results)
+        - [Heatmaps](#heatmaps)
+      - [Code](#code)
+        - [Generator](#generator)
+        - [Experiments](#experiments)
+    - [Replicating the major results](#replicating-the-major-results)
+    
 
 ## Purpose
 
@@ -44,82 +46,16 @@ The artifact as reported in the original paper is available on Zenodo
 
 A pre-print of the original paper titled ***"Program Feature-based Benchmarking for FuzzTesting"*** can be found inside this artifact package. 
 
-## FeatureBench
+### Getting Started
+We provide smaller experiments to verify the functionality of the artifact in this section, as replicating the major paper results is expected to take hundreds of hours of machine time.
 
-The `FeatureBench` directory contains 153 benchmark programs generated from this work. The programs are organized by feature parameters as discussed in the paper, with 13 sub-directories (groups):
-  - **COMW**: Number of conditional branches (Width) - 16 programs
-  - **COMD**: Number of conditional branches (Depth) - 8 programs
-  - **COMWE**: Execution probability of conditional branches (Weight) - 7 programs
-  - **COMB**: Execution probability of conditional branches (BBranch) - 32 programs
-  - **LOOPI**: Loops and recursions (Iteration, Has_Data_Constraint=Off) - 10 programs
-  - **LOOPDI**: Loops and recursions with data constraints (Iteration, Has_Data_Constraint=On) - 10 programs
-  - **RECURI**: Recursions (Iteration, Has_Data_Constraint=Off) - 10 programs
-  - **RECURDI**: Recursions with data constraints (Iteration, Has_Data_Constraint=On) - 10 programs
-  - **MAGICS**: Magic bytes (Start) - 10 programs
-  - **MAGICL**: Magic bytes (Length) - 10 programs
-  - **MAGICD**: Nested magic bytes and checksum tests (Depth) - 10 programs
-  - **CHECKSUMC**: Checksum tests (Count) - 10 programs
-  - **CHECKSUMD**: Nested checksum tests (Depth) - 10 programs
-
-Each benchmark program directory contains the **source code** (C files) and a **Makefile** for compilation.
-
-## Data
-
-The `data` directory contains the experimental data, and visualizations (heatmaps) that support the conclusions made in the two research questions (RQ1 and RQ2).
-Inside the `data` directory, there are two sub-directories (`results` and `heatmaps`).
-
-### Results
-The `results` directory contains 12 CSV files with experimental results for 11 fuzzers: AFL, AFLFast, AFL++, Honggfuzz, EcoFuzz, MOpt, Fairfuzz, TortoiseFuzz, Memlock, RedQueen, and Laf-intel. 
-Each CSV file corresponds to a group of benchmark programs. The results for `CHECKSUMC` and `CHECKSUMD` are saved in a single CSV file.
-These results are used to generate the correlation results and visualizations for Research Question 2 (RQ2).
-
-### Heatmaps
-The `results` directory contains 13 heatmaps, each displaying the **Mann-Whitney U test (p-value)** for program pairwise runtime comparisons in the `COMB` benchmark group for each fuzzer. Note that TortoiseFuzz and Memlock have two variants, so each has two heatmaps.
-
-## Code
-
-The `code` directory contains two sub-directories (`generator` and `experiments`), which contain the source code of the benchmark generation scripts used in Section 4 and the experiment scripts used in Section 5, respectively. 
-
-### Generator
-
-The `generator` directory contains 3 sub-directories: `config`, `template_char`, and `template_num`, and 11 python scripts:
-  - **config**: Contains 13 configuration files for the benchmark generation scripts. Each configuration file corresponds to a group of benchmark programs.
-  - **template_char**: Contains one template C file and a Makefile for generating the benchmark programs for the `LOOPI`, `LOOPDI`, `RECURI`, `RECURDI`, `MAGICS`, `MAGICL`, `MAGICD`, `CHECKSUMC`, and `CHECKSUMD` groups.
-  - **template_num**: Contains three template C files or header files, and a Makefile for generating the benchmark programs for the `COMW`, `COMD`, `COMWE`, and `COMB` groups.
-  - **generate_benchmark_char.py**: Generates the benchmark programs based on the configuration files and the `template_char` template.
-  - **generate_benchmark_num.py**: Generates the benchmark programs based on the configuration files and the `template_num` template.
-  - **generate_prog_xxx.py**: Generates the C source code for each benchmark program under the respective groups. 
-
-  _Note: `generate_prog_comp.py` generates programs for the `COMW` and `COMD` groups, `generate_prog_magic.py` generates programs for the `MAGICS`, `MAGICL`, and `MAGICD` groups, and `generate_prog_checksum.py` generates programs for the `CHECKSUMC` and `CHECKSUMD` groups._
-
-### Experiments
-
-The `generator` directory contains 13 sub-directories, 12 of which correspond to a fuzzer or its variants. In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
-
-_Note: AFL and AFLFast share one directory. AFL uses the exploit power schedule, AFLFast uses the fast power schedule. Memlock has two variants: Heap and Stack. TorotiseFuzz has two variants: bb and loop._
-
-The additional sub-directory, `testfuzz`, is provided for testing purpose for the _Getting Started_ evaluation, which reuses the `AFL++` docker image. There a small benchmark, `testbench`, inside the `testfuzz` directory, which contains 1 benchmark program `COMP_W2_D4_B1` and a `seed` directory with 1 seed input file.
-
-Inside each fuzzer directory, there is a `coverage` sub-directory, a `build.sh` script, a `Dockerfile`, and a `report.py` script:
-  - **coverage**: Contains a `coverage.sh` script that collects the coverage information.
-  - **build.sh**: Compiles the benchmark programs, build the docker image, runs the fuzzer inside the docker container, and generates the final report.
-  - **Dockerfile**: Contains the instructions to build the docker image for each fuzzer.
-  - **report.py**: Extracts the coverage information from the fuzzer output and generates final reports.
-
-_Note: For ecofuzz, there is an additional script `static_module.sh` to aid in its fuzzing process._
-
-## Setup
-
-### Requirements
+#### Requirements
 
 The evaluation of this artifact does not require specific hardware. However, the following software and hardware specifications are recommended:
 
 - Linux (tested with Ubuntu 22.04.3 LTS);
 - Docker (tested with version 25.0.2);
 - Python (tested with version 3.10.12)
-
-### Getting Started
-We provide smaller experiments to verify the functionality of the artifact in this section, as replicating the major paper results is expected to take hundreds of hours of machine time.
 
 #### Generating the Benchmark Programs
 
@@ -202,7 +138,76 @@ By default, the fuzzer runs each benchmark program for 20 iterations. The result
 The profraw files (`.profraw`) are generated by llvm-cov, which is used to collect the coverage information. The `lcov` folder contains the coverage information in JSON format (`coverage.json`). 
 Finally, fuzzing statistics are extracted from both the `fuzzer_stats` and `coverage.json` files to generate a csv report (`testfuzz_fast.csv`), which is stored in the `reports` folder.
 
-### Detailed Description
+## Detailed Description
+
+### Structure of the Artifact
+
+#### FeatureBench
+
+The `FeatureBench` directory contains 153 benchmark programs generated from this work. The programs are organized by feature parameters as discussed in the paper, with 13 sub-directories (groups):
+  - **COMW**: Number of conditional branches (Width) - 16 programs
+  - **COMD**: Number of conditional branches (Depth) - 8 programs
+  - **COMWE**: Execution probability of conditional branches (Weight) - 7 programs
+  - **COMB**: Execution probability of conditional branches (BBranch) - 32 programs
+  - **LOOPI**: Loops and recursions (Iteration, Has_Data_Constraint=Off) - 10 programs
+  - **LOOPDI**: Loops and recursions with data constraints (Iteration, Has_Data_Constraint=On) - 10 programs
+  - **RECURI**: Recursions (Iteration, Has_Data_Constraint=Off) - 10 programs
+  - **RECURDI**: Recursions with data constraints (Iteration, Has_Data_Constraint=On) - 10 programs
+  - **MAGICS**: Magic bytes (Start) - 10 programs
+  - **MAGICL**: Magic bytes (Length) - 10 programs
+  - **MAGICD**: Nested magic bytes and checksum tests (Depth) - 10 programs
+  - **CHECKSUMC**: Checksum tests (Count) - 10 programs
+  - **CHECKSUMD**: Nested checksum tests (Depth) - 10 programs
+
+Each benchmark program directory contains the **source code** (C files) and a **Makefile** for compilation.
+
+#### Data
+
+The `data` directory contains the experimental data, and visualizations (heatmaps) that support the conclusions made in the two research questions (RQ1 and RQ2).
+Inside the `data` directory, there are two sub-directories (`results` and `heatmaps`).
+
+##### Results
+The `results` directory contains 12 CSV files with experimental results for 11 fuzzers: AFL, AFLFast, AFL++, Honggfuzz, EcoFuzz, MOpt, Fairfuzz, TortoiseFuzz, Memlock, RedQueen, and Laf-intel. 
+Each CSV file corresponds to a group of benchmark programs. The results for `CHECKSUMC` and `CHECKSUMD` are saved in a single CSV file.
+These results are used to generate the correlation results and visualizations for Research Question 2 (RQ2).
+
+##### Heatmaps
+The `results` directory contains 13 heatmaps, each displaying the **Mann-Whitney U test (p-value)** for program pairwise runtime comparisons in the `COMB` benchmark group for each fuzzer. Note that TortoiseFuzz and Memlock have two variants, so each has two heatmaps.
+
+#### Code
+
+The `code` directory contains two sub-directories (`generator` and `experiments`), which contain the source code of the benchmark generation scripts used in Section 4 and the experiment scripts used in Section 5, respectively. 
+
+##### Generator
+
+The `generator` directory contains 3 sub-directories: `config`, `template_char`, and `template_num`, and 11 python scripts:
+  - **config**: Contains 13 configuration files for the benchmark generation scripts. Each configuration file corresponds to a group of benchmark programs.
+  - **template_char**: Contains one template C file and a Makefile for generating the benchmark programs for the `LOOPI`, `LOOPDI`, `RECURI`, `RECURDI`, `MAGICS`, `MAGICL`, `MAGICD`, `CHECKSUMC`, and `CHECKSUMD` groups.
+  - **template_num**: Contains three template C files or header files, and a Makefile for generating the benchmark programs for the `COMW`, `COMD`, `COMWE`, and `COMB` groups.
+  - **generate_benchmark_char.py**: Generates the benchmark programs based on the configuration files and the `template_char` template.
+  - **generate_benchmark_num.py**: Generates the benchmark programs based on the configuration files and the `template_num` template.
+  - **generate_prog_xxx.py**: Generates the C source code for each benchmark program under the respective groups. 
+
+  _Note: `generate_prog_comp.py` generates programs for the `COMW` and `COMD` groups, `generate_prog_magic.py` generates programs for the `MAGICS`, `MAGICL`, and `MAGICD` groups, and `generate_prog_checksum.py` generates programs for the `CHECKSUMC` and `CHECKSUMD` groups._
+
+##### Experiments
+
+The `generator` directory contains 13 sub-directories, 12 of which correspond to a fuzzer or its variants. In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
+
+_Note: AFL and AFLFast share one directory. AFL uses the exploit power schedule, AFLFast uses the fast power schedule. Memlock has two variants: Heap and Stack. TorotiseFuzz has two variants: bb and loop._
+
+The additional sub-directory, `testfuzz`, is provided for testing purpose for the _Getting Started_ evaluation, which reuses the `AFL++` docker image. There a small benchmark, `testbench`, inside the `testfuzz` directory, which contains 1 benchmark program `COMP_W2_D4_B1` and a `seed` directory with 1 seed input file.
+
+Inside each fuzzer directory, there is a `coverage` sub-directory, a `build.sh` script, a `Dockerfile`, and a `report.py` script:
+  - **coverage**: Contains a `coverage.sh` script that collects the coverage information.
+  - **build.sh**: Compiles the benchmark programs, build the docker image, runs the fuzzer inside the docker container, and generates the final report.
+  - **Dockerfile**: Contains the instructions to build the docker image for each fuzzer.
+  - **report.py**: Extracts the coverage information from the fuzzer output and generates final reports.
+
+_Note: For ecofuzz, there is an additional script `static_module.sh` to aid in its fuzzing process._
+
+### Replicating the major results
+
 Replicating the major results from the paper is expected to require thousands of hours of machine time and significant system memory. Please ensure that sufficient computing resources are available before running these commands. For reference, the experiments in our paper were conducted on two servers:  
 
 - *Server 1*: 384GB of RAM, 2 Intel Xeon Gold 5218 16-core CPUs @ 2.30GHz.  
