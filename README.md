@@ -1,8 +1,8 @@
-# The Artifacts for Program Feature-based Benchmarking for FuzzTesting
+# The Artifacts for Program Feature-based Benchmarking for Fuzz Testing
 
 ## Table of Contents
 
-- [The Artifacts for Program Feature-based Benchmarking for FuzzTesting](#the-artifacts-for-program-feature-based-benchmarking-for-fuzztesting)
+- [The Artifacts for Program Feature-based Benchmarking for Fuzz Testing](#the-artifacts-for-program-feature-based-benchmarking-for-fuzz-testing)
   - [Table of Contents](#table-of-contents)
   - [Purpose](#purpose)
   - [Provenance](#provenance)
@@ -26,7 +26,7 @@
 
 ## Purpose
 
-This artifact contains the FeatureBench, code and data for the paper titled ***"Program Feature-based Benchmarking for FuzzTesting"***.
+This artifact contains the FeatureBench, code and data for the paper titled ***"Program Feature-based Benchmarking for Fuzz Testing"***.
 
 The `FeatureBench` directory contains the benchmark programs generated from this work.
 
@@ -46,7 +46,7 @@ Our README.md file gives guidance on how to setup and run the experiments in our
 The artifact as reported in the original paper is available on Zenodo
 (https://doi.org/xxxxxxxx). 
 
-A pre-print of the original paper titled ***"Program Feature-based Benchmarking for FuzzTesting"*** can be found inside this artifact package. 
+A pre-print of the original paper titled ***"Program Feature-based Benchmarking for Fuzz Testing"*** can be found inside this artifact package. 
 
 ### Getting Started
 We provide smaller experiments to verify the functionality of the artifact in this section, as replicating the major paper results is expected to take hundreds of hours of machine time.
