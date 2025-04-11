@@ -1,8 +1,8 @@
-# Evaluate all fuzzers on COMD group. 
-bash fuzz_all_COMW.sh
-
 # Evaluate all fuzzers on COMW group.
 bash fuzz_all_COMW.sh
+
+# Evaluate all fuzzers on COMD group. 
+bash fuzz_all_COMD.sh
 
 # Evaluate all fuzzers on COMB group.
 bash fuzz_all_COMB.sh
