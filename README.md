@@ -8,8 +8,8 @@
   - [Provenance](#provenance)
   - [Getting Started](#getting-started)
     - [Requirements](#requirements)
-    - [Generating the Benchmark Programs](#generating-the-benchmark-programs)
-    - [Fuzzing the Benchmark Programs](#fuzzing-the-benchmark-programs)
+    - [Generate the Benchmark Programs](#generate-the-benchmark-programs)
+    - [Fuzz the Benchmark Programs](#fuzz-the-benchmark-programs)
   - [Detailed Description](#detailed-description)
     - [Structure of the Artifact](#structure-of-the-artifact)
       - [FeatureBench](#featurebench)
@@ -57,7 +57,7 @@ The evaluation of this artifact does not require specific hardware. However, the
 - Docker (tested with version 25.0.2);
 - Python (tested with version 3.10.12)
 
-#### Generating the Benchmark Programs
+#### Generate the Benchmark Programs
 
 First, ensure that you are in the `code/generator` directory:
 
@@ -65,7 +65,7 @@ First, ensure that you are in the `code/generator` directory:
 
 Then, run the following command to generate the benchmark programs for the `COMD` group as an example:
 
-```bash
+```commandline
 python3 generate_prog_comp.py comd --out COMD_PROG
 ```
 
@@ -73,13 +73,13 @@ This will create a `COMD_PROG` folder containing 8 generated C source code files
 
 Next, run the following command to generate the benchmark programs for the `COMD` group:
 
-```bash
+```commandline
 python3 generate_benchmark_num.py COMD_PROG --out COMD
 ```
 
 This will create a `COMD` folder containing 8 generated benchmark programs for the `COMD` group.
 
-#### Fuzzing the Benchmark Programs
+#### Fuzz the Benchmark Programs
 
 First, ensure that you are in the `code/experiments` directory:
 
@@ -87,7 +87,7 @@ First, ensure that you are in the `code/experiments` directory:
 
 To run the experiments using the `testfuzz`, run the following command:
 
-```bash
+```commandline
 cd testfuzz && bash build.sh fast COMD 30
 ```
 where `fast` is the power schedule, `COMD` is the benchmark group, and `30` can be configured to the timeout (unit: second) you wish to use. 
@@ -192,9 +192,9 @@ The `generator` directory contains 3 sub-directories: `config`, `template_char`,
 
 ##### Experiments
 
-The `generator` directory contains 13 sub-directories, 12 of which correspond to a fuzzer or its variants. In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
+The `generator` directory contains 14 sub-directories, 13 of which correspond to a fuzzer or its variants. In total, we evaluate 11 fuzzers, including `AFL`, `AFLFast`, `AFL++`, `Honggfuzz`, `EcoFuzz`, `MOpt`, `FairFuzz`, `TortoiseFuzz`, `Memlock`, `RedQueen`, and `Laf-Intel`. 
 
-_Note: AFL and AFLFast share one directory. AFL uses the exploit power schedule, AFLFast uses the fast power schedule. Memlock has two variants: Heap and Stack. TorotiseFuzz has two variants: bb and loop._
+_Note: Memlock has two variants: Heap and Stack. TorotiseFuzz has two variants: bb and loop._
 
 The additional sub-directory, `testfuzz`, is provided for testing purpose for the _Getting Started_ evaluation, which reuses the `AFL++` docker image. There a small benchmark, `testbench`, inside the `testfuzz` directory, which contains 1 benchmark program `COMP_W2_D4_B1` and a `seed` directory with 1 seed input file.
 
@@ -206,13 +206,101 @@ Inside each fuzzer directory, there is a `coverage` sub-directory, a `build.sh` 
 
 _Note: For ecofuzz, there is an additional script `static_module.sh` to aid in its fuzzing process._
 
-### Replicating the major results
+### Replicate the major results
 
-Replicating the major results from the paper is expected to require hundreds of hours of machine time and significant system memory. Please ensure that sufficient computing resources are available before running these commands. For reference, the experiments in our paper were conducted on a server with an AMD Ryzen Threadripper PRO 5975WX CPU (64 threads) and 128GB RAM.
+#### Generate the Complete Benchmark Programs
 
-The following 24 commands will run experiments for all tool/benchmark combinations. 
-Alternatively, you can execute the shell script `run_all_s1.sh`. 
+Navigate to the `code/generator` directory:
 
 ```commandline
+cd code/generator
+```
+and run the following 24 commands to generate the benchmark programs for all groups.
+Alternatively, you can execute the shell script `generate_all.sh`.
+
+```commandline
+
+# Generate benchmark programs for COMD group
+python3 generate_prog_comp.py comd --out COMD_PROG
+python3 generate_benchmark_num.py COMD_PROG --out COMD
+
+# Generate benchmark programs for COMW group
+python3 generate_prog_comp.py comw --out COMW_PROG
+python3 generate_benchmark_num.py COMW_PROG --out COMW
+
+# Generate benchmark programs for COMB group
+python3 generate_prog_comb.py --out COMB_PROG
+python3 generate_benchmark_num.py COMB_PROG --out COMB
+
+# Generate benchmark programs for COMWE group
+python3 generate_prog_comwe.py --out COMWE_PROG
+python3 generate_benchmark_num.py COMWE_PROG --out COMWE
+
+# Generate benchmark programs for LOOPI group
+python3 generate_prog_loop.py --out LOOPI_PROG
+python3 generate_benchmark_char.py LOOPI_PROG --out LOOPI
+
+# Generate benchmark programs for LOOPDI group
+python3 generate_prog_loop_data.py --out LOOPDI_PROG
+python3 generate_benchmark_char.py LOOPDI_PROG --out LOOPDI
+
+# Generate benchmark programs for RECURI group
+python3 generate_prog_recur.py --out RECURI_PROG
+python3 generate_benchmark_char.py RECURI_PROG --out RECURI
+
+# Generate benchmark programs for RECURDI group
+python3 generate_prog_recur_data.py --out RECURDI_PROG
+python3 generate_benchmark_char.py RECURDI_PROG --out RECURDI
+
+# Generate benchmark programs for MAGICS group
+python3 generate_prog_magic.py magics --out MAGICS_PROG
+python3 generate_benchmark_char.py MAGICS_PROG --out MAGICS
+
+# Generate benchmark programs for MAGICL group
+python3 generate_prog_magic.py magicl --out MAGICL_PROG
+python3 generate_benchmark_char.py MAGICL_PROG --out MAGICL
+
+# Generate benchmark programs for MAGICD group
+python3 generate_prog_magic.py magicd --out MAGICD_PROG
+python3 generate_benchmark_char.py MAGICD_PROG --out MAGICD
+
+# Generate benchmark programs for CHECKSUMC group
+python3 generate_prog_checksum.py checksumc --out CHECKSUMC_PROG
+python3 generate_benchmark_char.py CHECKSUMC_PROG --out CHECKSUMC
+
+# Generate benchmark programs for CHECKSUMD group
+python3 generate_prog_checksum.py checksumd --out CHECKSUMD_PROG
+python3 generate_benchmark_char.py CHECKSUMD_PROG --out CHECKSUMD_PROG
+
+```
+#### Evaluate All Fuzzers on FeatureBench
+
+Evaluate all fuzzers on FeatureBench is expected to require hundreds of hours of machine time and significant system memory. Please ensure that sufficient computing resources are available before running these commands. For reference, the experiments in our paper were conducted on a server with an AMD Ryzen Threadripper PRO 5975WX CPU (64 threads) and 128GB RAM.
+
+To evaluate all fuzzers on all program groups in FeatureBench, navigate to the `code/experiments` directory: 
+
+```commandline
+cd code/experiments
+```
+and run the following 13 commands to evaluate all fuzzers on COMD group.
+Alternatively, you can execute the shell script `fuzz_all_COMD.sh`.
+
+```commandline
+
+# Evaluate all fuzzers on COMD group. 
+# Expected to take 10 hours.
+bash afl/build.sh exploit COMD 7200 &
+bash aflfast/build.sh fast COMD 7200 &
+bash aflplusplus/build.sh explore COMD 7200 &
+bash honggfuzz/build.sh COMD 7200 &
+bash ecofuzz/build.sh COMD 7200 &
+bash mopt/build.sh COMD 7200 &
+bash fairfuzz/build.sh COMD 7200 &
+bash tortoise-bb/build.sh COMD 7200 &
+bash tortoise-loop/build.sh COMD 7200 &
+bash memlock-heap/build.sh COMD 7200 &
+bash memlock-stack/build.sh COMD 7200 &
+bash redqueen/build.sh COMD 7200 &
+bash laf-intel/build.sh COMD 7200 &
 
 ```
