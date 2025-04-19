@@ -36,7 +36,7 @@ The `data` directory contains the experimental data, and visualizations (heatmap
 
 We are applying for the **Available**, **Functional**, and **Reusable** badges.
 
-We believe we deserve the **Available** badge because our artifact is available on Zenodo at https://doi.org/10.5281/zenodo.15199988 (DOI 10.5281/zenodo.15199988) for long-term archiving.
+We believe we deserve the **Available** badge because our artifact is available on Zenodo at https://doi.org/10.5281/zenodo.15200822 (DOI 10.5281/zenodo.15200822) for long-term archiving.
 
 We believe we deserve the **Functional** and **Reusable** badges because our artifact can be executed and used to generate the benchmark programs and experimental results as described in the paper.
 Our README.md file gives guidance on how to setup and run the experiments in our paper. 
@@ -44,7 +44,7 @@ Our README.md file gives guidance on how to setup and run the experiments in our
 ## Provenance
 
 The artifact as reported in the original paper is available on Zenodo
-(https://doi.org/10.5281/zenodo.15199988). 
+(https://doi.org/10.5281/zenodo.15200822). 
 
 A pre-print of the original paper titled ***"Program Feature-based Benchmarking for Fuzz Testing"*** can be found inside this artifact package. 
 
